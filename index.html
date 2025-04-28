@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JetDev - Transformando Ideias em Realidade Digital</title>
+    <link rel="icon" href="img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #3e00bd;
+            --primary-dark: #2a0080;
+            --primary-light: #5019e6;
+            --accent: #6b30e8;
+            --dark-bg: #0a0517;
+            --text-color: #E6E8EB;
+            --text-muted: #8D929C;
+            --border-color: rgba(62, 0, 189, 0.2);
+            --card-bg: rgba(14, 8, 33, 0.3);
+            --button-bg: #3e00bd;
+            --button-hover: #5019e6;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Textura sutil de fundo */
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233e00bd' fill-opacity='0.03' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Navbar moderna e minimalista */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 5, 23, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .navbar-logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .navbar-logo span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navbar-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            padding: 0.5rem 0;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--text-color);
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--button-bg);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--button-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hero section mais compacta */
+        .hero {
+            padding-top: 7rem;
+            padding-bottom: 3rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #ffffffcc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 1rem auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* Video Showcase */
+        .video-showcase {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .video-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .video-slide.active {
+            opacity: 1;
+        }
+
+        .video-slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .video-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        /* Etec section mais compacta */
+        .etec-section {
+            text-align: center;
+            padding: 1rem 0 3rem;
+        }
+
+        .etec-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .etec-logo {
+            max-width: 150px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* Features e Products sections mais compactas */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            color: var(--text-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(62, 0, 189, 0.1);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+            font-size: 1.2rem;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .feature-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Produtos mais compactos */
+        .main-product {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .main-product:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .main-product-content {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .main-product-image {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-product-image i {
+            font-size: 5rem;
+            color: var(--primary-light);
+        }
+
+        .main-product-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .main-product-info p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-note {
+            font-style: italic;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .guarantee-text {
+            color: var(--primary-light);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .smaller-products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .product-image {
+            height: 100px;
+            width: 100%;
+            background-color: rgba(62, 0, 189, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            font-size: 2rem;
+        }
+
+        .product-content {
+            padding: 1.2rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .product-description {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-button {
+            width: 100%;
+            font-size: 0.85rem;
+            padding: 0.4rem 0;
+        }
+
+        /* CTA Section mais compacta */
+        .cta {
+            background: linear-gradient(45deg, rgba(62, 0, 189, 0.1), rgba(107, 48, 232, 0.1));
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-description {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Footer mais compacto */
+        .footer {
+            background: rgba(10, 5, 23, 0.8);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .footer-section a,
+        .footer-section p {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .social-links {
+            margin-top: 0.8rem;
+        }
+
+        .copyright {
+            padding-top: 1.5rem;
+        }
+
+        /* Utilities */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+        }
+
+        .fade-in-delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in-delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.7rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .features-grid,
+            .smaller-products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+            }
+
+            .features-grid,
+            .smaller-products {
+                grid-template-columns: 1fr;
+            }
+
+            .main-product-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <div class="navbar-logo">
+                <img src="img/icon.png" alt="JetDev">
+                <span>JetDev</span>
+            </div>
+            <div class="navbar-menu">
+                <a href="#recursos">Recursos</a>
+                <a href="#produtos">Produtos</a>
+                <a href="#contato">Contato</a>
+            </div>
+            <div class="navbar-actions">
+                <a href="https://discord.gg/kry5PWkbTB" target="_blank" class="btn btn-primary">Saiba Mais</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero container">
+        <h1 class="hero-title fade-in">Imagine em segundos</h1>
+        <h2 class="hero-subtitle fade-in fade-in-delay-1">Obtenha em horas</h2>
+        <p class="hero-description fade-in fade-in-delay-2">
+            A JetDev é especializada em criar soluções digitais com a agilidade que seu negócio precisa,
+            garantindo entregas rápidas sem abrir mão da qualidade.
+        </p>
+        <div class="hero-buttons fade-in fade-in-delay-2">
+            <a href="https://discord.gg/kry5PWkbTB" target="_blank" class="btn btn-primary">Conheça Nossas Soluções</a>
+        </div>
+    </section>
+
+    <!-- Video Showcase -->
+    <div class="video-showcase">
+        <div class="video-container">
+            <div class="video-slide active">
+                <video autoplay loop muted>
+                    <source src="video/prog1.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-slide">
+                <video autoplay loop muted>
+                    <source src="video/prog2.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="video-slide">
+                <video autoplay loop muted>
+                    <source src="video/prog3.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        <div class="video-nav">
+            <div class="video-dot active" data-index="0"></div>
+            <div class="video-dot" data-index="1"></div>
+            <div class="video-dot" data-index="2"></div>
+        </div>
+    </div>
+
+    <!-- Etec Section -->
+    <div class="etec-section container">
+        <p class="etec-title">CRIADO POR ALUNOS DA ETEC JOÃO BELARMINO</p>
+        <img src="img/etec.png" alt="Etec João Belarmino" class="etec-logo">
+    </div>
+
+    <!-- Features Section -->
+    <section id="recursos" class="section">
+        <h2 class="section-title">Por que escolher a JetDev?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Entregas Rápidas</h3>
+                <p class="feature-description">
+                    Nosso foco está na entrega rápida sem comprometer a qualidade.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="feature-title">Código Otimizado</h3>
+                <p class="feature-description">
+                    Desenvolvemos usando as melhores práticas para garantir performance.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="feature-title">Suporte Contínuo</h3>
+                <p class="feature-description">
+                    Oferecemos suporte técnico durante e após o desenvolvimento.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="produtos" class="section">
+        <h2 class="section-title">Nossas Soluções</h2>
+        
+        <!-- Produto Principal -->
+        <div class="main-product">
+            <div class="main-product-content">
+                <div class="main-product-info">
+                    <span class="badge">DESTAQUE</span>
+                    <h3>Desenvolvimento Web</h3>
+                    <p>
+                        Websites e aplicações web completas, totalmente responsivas e otimizadas para SEO. 
+                        Ideal para empresas que buscam uma presença digital profissional.
+                    </p>
+                    <p><strong>Entrega garantida em até 2 dias para sites simples ou seu dinheiro de volta!</strong></p>
+                    <p class="pricing-note">* Valores definidos mediante consulta e análise do projeto</p>
+                    <p class="guarantee-text"><strong>Entrega garantida em até 2 dias para sites simples ou seu dinheiro de volta!</strong></p>
+                    <a href="https://discord.gg/kry5PWkbTB" target="_blank" class="btn btn-primary">Solicitar Orçamento</a>
+                </div>
+                <div class="main-product-image">
+                    <i class="fas fa-globe"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Produtos Secundários -->
+        <div class="smaller-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Aplicativos Mobile</h3>
+                    <p class="product-description">
+                        Aplicativos nativos ou híbridos para iOS e Android, com design intuitivo.
+                    </p>
+                    <a href="https://discord.gg/kry5PWkbTB" target="_blank" class="btn btn-primary product-button">Solicitar Orçamento</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Bancos de Dados</h3>
+                    <p class="product-description">
+                        Estruturação e otimização de bancos de dados relacionais e não-relacionais.
+                    </p>
+                    <a href="https://discord.gg/kry5PWkbTB" target="_blank" class="btn btn-primary product-button">Solicitar Orçamento</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Softwares Simples</h3>
+                    <p class="product-description">
+                        Sistemas e ferramentas personalizadas para automatização de processos.
+                    </p>
+                    <a href="https://discord.gg/kry5PWkbTB" target="_blank" class="btn btn-primary product-button">Solicitar Orçamento</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">Acelere o desenvolvimento do seu projeto</h2>
+            <p class="cta-description">
+                Entre em contato para discutir suas necessidades e obter um orçamento personalizado.
+                Sites simples entregues em até 2 dias ou seu dinheiro de volta!
+            </p>
+            <a href="https://discord.gg/kry5PWkbTB" target="_blank" class="btn btn-primary">Fale Conosco</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contato" class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Sobre Nós</h3>
+                    <p>A JetDev é uma empresa criada por alunos da Etec João Belarmino, especializada em desenvolvimento de soluções digitais rápidas e de qualidade.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Soluções</h3>
+                    <a href="#produtos">Desenvolvimento Web</a>
+                    <a href="#produtos">Aplicativos Mobile</a>
+                    <a href="#produtos">Bancos de Dados</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Links Úteis</h3>
+                    <a href="#recursos">Recursos</a>
+                    <a href="#produtos">Produtos</a>
+                    <a href="#contato">Contato</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <p>contato@jetdev.com</p>
+                    <p>+55 (11) 9999-9999</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2024 JetDev. Todos os direitos reservados. Projeto desenvolvido por alunos da Etec João Belarmino.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script para controlar os vídeos
+        const videoSlides = document.querySelectorAll('.video-slide');
+        const videoDots = document.querySelectorAll('.video-dot');
+        let videoIndex = 0;
+        let videoInterval;
+
+        // Função para mostrar um slide específico
+        function showVideoSlide(index) {
+            videoSlides.forEach(slide => slide.classList.remove('active'));
+            videoDots.forEach(dot => dot.classList.remove('active'));
+            
+            videoSlides[index].classList.add('active');
+            videoDots[index].classList.add('active');
+            videoIndex = index;
+        }
+
+        // Função para ir para o próximo slide
+        function nextVideoSlide() {
+            videoIndex = (videoIndex + 1) % videoSlides.length;
+            showVideoSlide(videoIndex);
+        }
+
+        // Adicionar click event para os dots
+        videoDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showVideoSlide(index);
+                resetVideoInterval();
+            });
+        });
+
+        // Resetar o intervalo quando há interação
+        function resetVideoInterval() {
+            clearInterval(videoInterval);
+            videoInterval = setInterval(nextVideoSlide, 6000);
+        }
+
+        // Iniciar o carrossel
+        videoInterval = setInterval(nextVideoSlide, 6000);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
